@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+/*모바일용 css*/
+
+.info_section{
+	order:1;
+	with:100%;
+	background:#2ecc71;
+	border-bottom:1px solid #39d67c;
+}
+
+.info_list{
+	display:flex;
+}
+
+.info_list li{
+	width:25%;
+	text-align:center;
+}
+
+.info_list li a{
+	display:block;
+	padding:15px 0;
+	padding:0.938rem 0;
+}

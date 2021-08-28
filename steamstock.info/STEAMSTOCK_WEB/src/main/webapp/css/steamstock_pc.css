@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+/*pc용 css*/
+
+@media all and (min-width:960px){
+	
+.info_section{
+	order:0;
+	position:absolute;
+	top:30px;
+	top:1.875rem;
+	right:30px;
+	right:1.875rem;
+	z-index:30;
+	width:auto;
+	border-bottom:0;
+}
+
+.info_list{
+	display:flex;
+}
+
+.info_list li{
+	width:auto;
+	margin-left:15px;
+	margin-left:0.625rem;
+}
+
+.info_list li a{
+	padding:0;
+}
+
+}
