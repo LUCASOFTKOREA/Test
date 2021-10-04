@@ -5,15 +5,27 @@
 <%@ page import="java.util.TimeZone" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
- <html>
+<html lang="ko">
 <head>
 <script data-ad-client="ca-pub-5714659227321605" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<!-- google adsense -->
+<!-- script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script-->
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Kosdaq 종목별 게시판</title>
 
-<!-- google adsense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVLHN7CXYV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QVLHN7CXYV');
+</script>
+
 
 <script language="JavaScript">
 <!--
@@ -69,7 +81,7 @@ try {
  String search_date = sf.format(nowTime);
  //String query = "SELECT STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT FROM STEAMSTOCK.STOCK_IDX ORDER BY cast(5MIN_READ_CNT as unsigned) desc, cast(idx_now as unsigned) desc limit 50";
   //String query = "SELECT STOCK_CODE, HOUR, 5MIN, 5MIN_IDX, 5MIN_READ_CNT  FROM STEAMSTOCK.STOCK_IDX_5MIN_HISTORY WHERE STOCK_CODE = '"+stock_code+"' AND DATE = '"+search_date+"' ORDER BY UPDATE_DATETIME";
- String query = "SELECT SNS_TYPE, STOCK_NAME, STOCK_CODE, REG_DT, READ_CNT, TITLE,WRITER,CONTENT_URL FROM STEAMSTOCK.KOSDAQ_BOARD WHERE STOCK_CODE = '"+stock_code+"' ORDER BY read_cnt desc limit 100;";
+ String query = "SELECT SNS_TYPE, STOCK_NAME, STOCK_CODE, REG_DT, READ_CNT, TITLE,WRITER,CONTENT_URL FROM STEAMSTOCK.KOSDAQ_BOARD WHERE STOCK_CODE = '"+stock_code+"' AND LEFT(REG_DT,10)=DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 9 HOUR),'%Y.%m.%d') ORDER BY read_cnt desc limit 100;";
  rs = stmt.executeQuery(query); 
  //////////////////////////////////////
  

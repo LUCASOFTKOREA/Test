@@ -4,15 +4,27 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.TimeZone" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
- <html>
+<html lang="ko">
 <head>
 <script data-ad-client="ca-pub-5714659227321605" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<!-- google adsense -->
+<!-- script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script-->
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Kospi 종목별 게시판</title>
 
-<!-- google adsense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVLHN7CXYV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QVLHN7CXYV');
+</script>
+
 
 <script language="JavaScript">
 <!--

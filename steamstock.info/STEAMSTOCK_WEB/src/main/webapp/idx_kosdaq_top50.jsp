@@ -5,24 +5,34 @@
 <%@ page import="java.util.TimeZone" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="ko">
 <head>
 <script data-ad-client="ca-pub-5714659227321605" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<META http-equiv="refresh" content="60; URL=localhost:8080">
+<!-- google adsense -->
+<!-- script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script-->
 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
 
 <title>Kosdaq 스팀스탁지수 TOP50</title>
 
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="shortcut icon" href="images/favicon/favicon.ico">
-<link rel="apple-touch-icon-precomposed" href="images/icon/flat-design-touch.png">
+<!--link rel="apple-touch-icon-precomposed" href="images/icon/flat-design-touch.png"-->
 <script src="js/jquery.min.js"></script>
 
-<!-- google adsense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script>
      
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVLHN7CXYV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QVLHN7CXYV');
+</script>
+
      
 <script language="JavaScript">
 <!--
@@ -41,6 +51,15 @@
 <!--
 start();
 -->
+</script>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(function (){
+    $("#menu_toggle_btn").click(function(){
+        $("#gnb").toggle();
+    });
+});    
 </script>
 
 <style>
@@ -67,7 +86,7 @@ border-bottom:1px solid #39d67c;
 }
 
 .info_list{
-display:flex;
+display:none;
 }
 
 .info_list li{
@@ -152,7 +171,7 @@ cursor:pointer;
 
 /* 슬라이더 영역 CSS */
 .slider_section{
-display:flex;
+display:none;
 justify-content:space-between;
 align-items:center;
 order:7;
@@ -192,6 +211,53 @@ background-position:0 0;
 }
 
 span.next_btn{
+margin-right:-10px;
+margin-right:-0.625rem;
+background-position:-34px 0;
+}
+
+
+.slider_section_m{
+display:flex;
+justify-content:space-between;
+align-items:center;
+order:7;
+width:100%;
+height:100%;
+background:#f3f4a2;
+font-weight:bold;
+}
+
+/* 새로추가했음 */
+.slider_section_m a{
+margin:0;
+padding:0;
+font-size:100%;
+text-decoration:none;
+vertical-align:baseline;
+font-weight:bold;
+color:#6d6e2a;
+background:transparent;
+}
+
+
+.slider_section_m span{
+width:34px;
+width:2.125rem;
+height:39px;
+height:2.438rem;
+text-indent:-9999px;
+background:url(images/s_images/slider_arrow.png) no-repeat;
+cursor:pointer;
+}
+
+span.prev_btn_m{
+margin-left:-10px;
+margin-left:-0.625rem;
+background-position:0 0;
+}
+
+span.next_btn_m{
 margin-right:-10px;
 margin-right:-0.625rem;
 background-position:-34px 0;
@@ -357,6 +423,7 @@ justify-content:space-between;
 order:10;
 width:100%;
 background:#474747;
+line-height:17px;
 }
 
 .footer p{
@@ -426,6 +493,7 @@ margin-top:-0.938rem;
 
 /* 슬라이더 영역 CSS */
 .slider_section{
+display:flex;
 width:100%;
 /* 460px ÷ 768px */
 height:auto;
@@ -434,6 +502,14 @@ height:auto;
 .slider_section span{
 position:relative;
 z-index:10;
+}
+
+.slider_section_m{
+display:none;
+}
+
+.slider_section_m span{
+display:none;
 }
 
 /* 최근 글 영역, 인기 글 영역 CSS */
@@ -638,9 +714,14 @@ display:none;
 
 /* 슬라이더 영역 CSS */
 .slider_section{
+display:flex;
 order:2;
 width:100%;
 /* 480px ÷ 960px */
+}
+
+.slider_section_m{
+display:none;
 }
 
 /* 최근 글 영역, 인기 글 영역 CSS */
@@ -744,6 +825,38 @@ text-align:left;
 }
 </style>
 
+<style>
+
+table,tr,td{
+
+  border:0px solid #000000;
+
+  border-collapse:collapse;
+
+}
+
+tr.colored:nth-child(even){
+
+  background-color:#f3f4a2;
+
+
+}
+
+tr.colored:nth-child(odd){
+
+  background-color:#f3f4a2;
+
+}
+
+tr.colored:hover td{
+
+  background-color:white !important;
+
+  color:#303f39 !important;
+
+}
+
+</style>
 
 </head>
 
@@ -762,14 +875,19 @@ String search_date = sf.format(nowTime);
 
 %>
 
+<%
+String ipAddress=request.getRemoteAddr();
+System.out.println("클라이언트 IP 주소: "+ipAddress);
+
+%>
 <body>
 	<div id="wrap">
 		<section class="info_section">
 			<ul class="info_list">
 				<li><a href="index.jsp"><img src="images/s_images/info_icon_01.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/info_icon_02.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/info_icon_03.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/info_icon_04.png" alt=""></a></li>
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_02.png" alt=""></a></li>
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_03.png" alt=""></a></li>
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_04.png" alt=""></a></li>
 			</ul>
 		</section>
 		<header class="header">
@@ -777,17 +895,17 @@ String search_date = sf.format(nowTime);
 				<a href="index.jsp">STEAM<br>STOCK</a>
 			</h1>
 			<nav class="nav">
-				<ul class="gnb">
+				<ul class="gnb" id="gnb" style="display:none;">
 					<li><a href="index.jsp">홈</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 					<li><a href="introudce.html">스팀스탁이란?</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 					<li><a href="idx_top50.jsp">kospi통계</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 					<li><a href="idx_kosdaq_top50.jsp">kosdaq통계</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 				</ul>
 			</nav>
-			<span class="menu_toggle_btn">전체 메뉴 토글 버튼</span>
+			<span class="menu_toggle_btn" id="menu_toggle_btn">전체 메뉴 토글 버튼</span>
 		</header>
-		<section class="slider_section">
-			<span class="prev_btn">이전 버튼</span>
+		<section class="slider_section_m">
+			<span class="prev_btn_m">이전 버튼</span>
 			
 			
 			
@@ -807,7 +925,155 @@ try {
  stmt = conn.createStatement();
  
  //////////////////////////////////////
- String query = "SELECT STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.KOSDAQ_IDX ORDER BY cast(5MIN_READ_CNT as unsigned) desc, cast(idx_now as unsigned) desc limit 50";
+ //원본 String query = "SELECT STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT,format(IDX_NOW*5MIN_READ_CNT,0) AS ST_IDX, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.KOSDAQ_IDX ORDER BY cast(5MIN_READ_CNT as unsigned)*IDX_NOW desc, cast(idx_now as unsigned) desc limit 50";
+
+ String range = request.getParameter("range");
+ String rangeLabel = "일평균";
+ 
+ if("lately".equals(range) || "null".equals(range) || range==null){
+	 range="lately";
+	 rangeLabel = "실시간";
+ }else if("daysum".equals(range)){
+	 rangeLabel = "일일합계";	 
+ }
+ 
+ String query = "";
+ 
+ if("day".equals(range)){
+	 query = "SELECT STIDX.STOCK_NAME,STIDX.STOCK_CODE,STIDX.IDX_NOW,STIDX.5MIN_READ_CNT,FORMAT(HIS.ST_IDX,0) AS ST_IDX, HIS.ST_IDX_SUM, STIDX.STOCK_PRICE_TODAY, STIDX.STOCK_PRICE_RATE_TODAY FROM (SELECT STOCK_CODE, cast(REPLACE(format(AVG(cast(5MIN_IDX as unsigned)*cast(5MIN_READ_CNT as unsigned)),0),',','') as unsigned) AS ST_IDX, cast(REPLACE(format(SUM(cast(5MIN_IDX as unsigned)*cast(5MIN_READ_CNT as unsigned)),0),',','') as unsigned) AS ST_IDX_SUM FROM STEAMSTOCK.KOSDAQ_IDX_5MIN_HISTORY WHERE DATE=DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 9 HOUR),'%Y-%m-%d') group by STOCK_CODE ORDER BY ST_IDX DESC ) HIS, STEAMSTOCK.KOSDAQ_IDX STIDX WHERE HIS.STOCK_CODE=STIDX.STOCK_CODE ORDER BY HIS.ST_IDX DESC, HIS.ST_IDX_SUM DESC limit 50";	 
+ }else if("daysum".equals(range)){
+	 query = "SELECT STIDX.STOCK_NAME,STIDX.STOCK_CODE,STIDX.IDX_NOW,STIDX.5MIN_READ_CNT,FORMAT(HIS.ST_IDX,0) AS ST_IDX, HIS.ST_IDX_AVG, STIDX.STOCK_PRICE_TODAY, STIDX.STOCK_PRICE_RATE_TODAY FROM (SELECT STOCK_CODE, cast(REPLACE(format(AVG(cast(5MIN_IDX as unsigned)*cast(5MIN_READ_CNT as unsigned)),0),',','') as unsigned) AS ST_IDX_AVG, cast(REPLACE(format(SUM(cast(5MIN_IDX as unsigned)*cast(5MIN_READ_CNT as unsigned)),0),',','') as unsigned) AS ST_IDX FROM STEAMSTOCK.KOSDAQ_IDX_5MIN_HISTORY WHERE DATE=DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 9 HOUR),'%Y-%m-%d') group by STOCK_CODE ORDER BY ST_IDX DESC ) HIS, STEAMSTOCK.KOSDAQ_IDX STIDX WHERE HIS.STOCK_CODE=STIDX.STOCK_CODE ORDER BY HIS.ST_IDX DESC limit 50";
+ }else{
+	 query = "SELECT STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT,format(IDX_NOW*5MIN_READ_CNT,0) AS ST_IDX, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.KOSDAQ_IDX ORDER BY cast(5MIN_READ_CNT as unsigned)*IDX_NOW desc, cast(idx_now as unsigned) desc limit 50"; 
+ }
+ 
+ rs = stmt.executeQuery(query); 
+ //////////////////////////////////////
+ 
+%>
+
+<table>
+<tr>
+<td colspan="2">
+&nbsp;
+</td>
+</tr>
+<tr>
+<td colspan="2">
+&nbsp;
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+<!--STRONG>Kosdaq통계 - 스팀스탁지수 TOP50<br><br>(5분간격 실시간 데이터) <br><br><%=search_date%></STRONG-->
+<STRONG>Kosdaq통계 - 스팀스탁지수 TOP50<br><br>(5분간격 <%=rangeLabel%> 데이터)<br><br> <%=search_date%><br><br>[<a href="/idx_kosdaq_top50.jsp?range=lately">실시간</a>,<a href="/idx_kosdaq_top50.jsp?range=day">일평균</a>,<a href="/idx_kosdaq_top50.jsp?range=daysum">일일합계</a>]</STRONG>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+&nbsp;
+</td>
+</tr>
+<tr>
+<td colspan="2">
+&nbsp;
+</td>
+</tr>
+<tr>
+<td width="60%" align="left">종목명</td>
+<!-- td>등록건수</td-->
+<!-- td>조회수</td-->
+<td width="40%" align="right">스팀스탁지수</td>
+</tr>
+<tr>
+<td colspan="2">
+&nbsp;
+</td>
+</tr>
+<%
+while(rs.next()){	
+%>
+<tr style='line-height:23px' class="colored">
+<td> 
+<%= rs.getString("STOCK_NAME")%> 
+[
+<a href="https://finance.naver.com/item/board.nhn?code=<%=rs.getString("STOCK_CODE")%>">N</a> 
+<a href="https://finance.daum.net/quotes/A<%=rs.getString("STOCK_CODE")%>#talks">D</a>
+]
+</td>
+<!-- td> <%= rs.getString("IDX_NOW")%> </td-->
+<!-- td> <%= rs.getString("5MIN_READ_CNT")%> </td-->
+<td align="center"> <%= rs.getString("ST_IDX")%> </td>
+</tr>
+<%	
+}
+%>
+<tr>
+<td colspan="2">
+&nbsp;
+</td>
+</tr>
+</table>
+
+<%
+ rs.close();
+ stmt.close();
+ conn.close();
+} catch(Exception e) {
+ out.println(e.getMessage());
+}
+%>
+			
+			
+			
+			<span class="next_btn_m">다음 버튼</span>
+		</section>
+
+		<section class="slider_section">
+			<span class="prev_btn">이전 버튼</span>
+			
+			
+			
+
+<%
+DB_URL = "jdbc:mysql://aa1xqh64wopfngq.cbsaeq7bocl1.ap-northeast-2.rds.amazonaws.com:3306/STEAMSTOCK";
+DB_USER = "lucasoftDB";
+DB_PASSWORD= "jazz6547";
+
+conn = null;
+stmt = null;
+rs = null;
+
+try {
+ Class.forName("com.mysql.jdbc.Driver");
+ conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+ stmt = conn.createStatement();
+ 
+ //////////////////////////////////////
+ //원본 String query = "SELECT STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT,format(IDX_NOW*5MIN_READ_CNT,0) AS ST_IDX, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.KOSDAQ_IDX ORDER BY cast(5MIN_READ_CNT as unsigned)*IDX_NOW desc, cast(idx_now as unsigned) desc limit 50";
+ String range = request.getParameter("range");
+ String rangeLabel = "일평균";
+ 
+ if("lately".equals(range) || "null".equals(range) || range==null){
+	 range="lately";
+	 rangeLabel = "실시간";
+ }else if("daysum".equals(range)){
+	 rangeLabel = "일일합계";	 
+ }
+ 
+ String query = "";
+  
+ if("day".equals(range)){
+	 query = "SELECT STIDX.STOCK_NAME,STIDX.STOCK_CODE,STIDX.IDX_NOW,STIDX.5MIN_READ_CNT,FORMAT(HIS.ST_IDX,0) AS ST_IDX, HIS.ST_IDX_SUM, STIDX.STOCK_PRICE_TODAY, STIDX.STOCK_PRICE_RATE_TODAY FROM (SELECT STOCK_CODE, cast(REPLACE(format(AVG(cast(5MIN_IDX as unsigned)*cast(5MIN_READ_CNT as unsigned)),0),',','') as unsigned) AS ST_IDX, cast(REPLACE(format(SUM(cast(5MIN_IDX as unsigned)*cast(5MIN_READ_CNT as unsigned)),0),',','') as unsigned) AS ST_IDX_SUM FROM STEAMSTOCK.KOSDAQ_IDX_5MIN_HISTORY WHERE DATE=DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 9 HOUR),'%Y-%m-%d') group by STOCK_CODE ORDER BY ST_IDX DESC ) HIS, STEAMSTOCK.KOSDAQ_IDX STIDX WHERE HIS.STOCK_CODE=STIDX.STOCK_CODE ORDER BY HIS.ST_IDX DESC, HIS.ST_IDX_SUM DESC limit 50";	 
+ }else if("daysum".equals(range)){
+	 query = "SELECT STIDX.STOCK_NAME,STIDX.STOCK_CODE,STIDX.IDX_NOW,STIDX.5MIN_READ_CNT,FORMAT(HIS.ST_IDX,0) AS ST_IDX, HIS.ST_IDX_AVG, STIDX.STOCK_PRICE_TODAY, STIDX.STOCK_PRICE_RATE_TODAY FROM (SELECT STOCK_CODE, cast(REPLACE(format(AVG(cast(5MIN_IDX as unsigned)*cast(5MIN_READ_CNT as unsigned)),0),',','') as unsigned) AS ST_IDX_AVG, cast(REPLACE(format(SUM(cast(5MIN_IDX as unsigned)*cast(5MIN_READ_CNT as unsigned)),0),',','') as unsigned) AS ST_IDX FROM STEAMSTOCK.KOSDAQ_IDX_5MIN_HISTORY WHERE DATE=DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 9 HOUR),'%Y-%m-%d') group by STOCK_CODE ORDER BY ST_IDX DESC ) HIS, STEAMSTOCK.KOSDAQ_IDX STIDX WHERE HIS.STOCK_CODE=STIDX.STOCK_CODE ORDER BY HIS.ST_IDX DESC limit 50";
+ }else{
+	 query = "SELECT STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT,format(IDX_NOW*5MIN_READ_CNT,0) AS ST_IDX, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.KOSDAQ_IDX ORDER BY cast(5MIN_READ_CNT as unsigned)*IDX_NOW desc, cast(idx_now as unsigned) desc limit 50"; 
+ }
+ 
+ 
+ 
+ 
  rs = stmt.executeQuery(query); 
  //////////////////////////////////////
  
@@ -826,12 +1092,15 @@ try {
 </tr>
 <tr>
 <td colspan="9" align="center">
-<STRONG>Kosdaq통계 - 스팀스탁지수 TOP50(5분간격 실시간 데이터) <%=search_date%></STRONG>
+<!--STRONG>Kosdaq통계 - 스팀스탁지수 TOP50(5분간격 실시간 데이터) <%=search_date%></STRONG-->
+<STRONG>Kosdaq통계 - 스팀스탁지수 TOP50<br><br>(5분간격 <%=rangeLabel%> 데이터)<br><br> <%=search_date%> [<a href="/idx_kosdaq_top50.jsp?range=lately">실시간</a>,<a href="/idx_kosdaq_top50.jsp?range=day">일평균</a>,<a href="/idx_kosdaq_top50.jsp?range=daysum">일일합계</a>]</STRONG>
 </td>
 </tr>
+<tr>
 <td colspan="9">
 &nbsp;
 </td>
+</tr>
 <tr>
 <td colspan="9">
 &nbsp;
@@ -842,11 +1111,11 @@ try {
 <!-- td>등록건수</td-->
 <!-- td>조회수</td-->
 <td align="center">스팀스탁지수</td>
-<td align="center">주가</td>
-<td align="center">주가변화</td>
-<td align="center">&nbsp;스팀스탁지수변화&nbsp;</td>
-<td align="center">&nbsp;종목게시판(최신글)&nbsp;</td>
-<td align="center">&nbsp;종목게시판(인기글)&nbsp;</td>
+<td align="center" width="150px">주가</td>
+<td align="center" width="150px">주가변화</td>
+<td align="center" width="150px">&nbsp;스팀스탁지수변화&nbsp;</td>
+<!--td align="center">&nbsp;종목게시판(최신글)&nbsp;</td>
+<td align="center">&nbsp;종목게시판(인기글)&nbsp;</td-->
 </tr>
 <tr>
 <td colspan="9">
@@ -856,7 +1125,7 @@ try {
 <%
 while(rs.next()){	
 %>
-<tr>
+<tr style='line-height:23px' class="colored">
 <td> 
 <%= rs.getString("STOCK_NAME")%> 
 [
@@ -866,12 +1135,15 @@ while(rs.next()){
 </td>
 <!-- td> <%= rs.getString("IDX_NOW")%> </td-->
 <!-- td> <%= rs.getString("5MIN_READ_CNT")%> </td-->
-<td align="center"> <%= Integer.parseInt((rs.getString("5MIN_READ_CNT")))*Integer.parseInt((rs.getString("IDX_NOW")))%> </td>
+<td align="center"> <%= rs.getString("ST_IDX")%> </td>
 <td align="center"> <%= rs.getString("STOCK_PRICE_TODAY")%>원 </td>
-<td width="180px" align="center"> <%= (rs.getString("STOCK_PRICE_RATE_TODAY")).replace("전일대비하락","-").replace("전일대비보합","").replace("전일대비상승","+").replace("+","<font color='red'>+</font>").replace("-","<font color='blue'>-</font>")%></td>
-<td align="center"> <a href="/idx_kosdaq_5min_history.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">5분보기</a> </td>
-<td align="center"> <a href="/board_kosdaq.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">최신글보기</a> </td>
-<td align="center"> <a href="/board_kosdaq_top.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">인기글보기</a> </td>
+<td width="180px" align="center"> <%= (rs.getString("STOCK_PRICE_RATE_TODAY")).replace("전일대비하락","-").replace("전일대비보합","").replace("전일대비상승","+").replace("전일대비상한가","+").replace("전일대비하한가","-").replace("+","<font color='red'>+</font>").replace("-","<font color='blue'>-</font>")%></td>
+<td align="center"> 
+<a href="/idx_kosdaq_5min_history.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">표보기</a> | 
+<a href="/idx_kosdaq_5min_history_chart.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">챠트보기</a> 
+</td>
+<!--td align="center"> <a href="/board_kosdaq.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">최신글보기</a> </td>
+<td align="center"> <a href="/board_kosdaq_top.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">인기글보기</a> </td-->
 </tr>
 <%	
 }
@@ -895,13 +1167,12 @@ while(rs.next()){
 			
 			
 			<span class="next_btn">다음 버튼</span>
-		</section>
-
-	
+		</section>	
 		
 
 		<footer class="footer">
-			<p>copyright&copy; 2021 LUCASOFT all rights reserved. <br><br>EMAIL: service@lucasoft.co.kr</p>
+			<p>copyright&copy; 2021 <a href="http://lucasoft.co.kr">LUCASOFT</a> all rights reserved.  <br><br>장이멈춘순간에도종토는달린다 - SteamStock
+			</p>
 		</footer>
 	</div>
 

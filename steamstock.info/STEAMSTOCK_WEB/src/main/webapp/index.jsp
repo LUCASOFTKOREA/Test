@@ -5,23 +5,115 @@
 <%@ page import="java.util.TimeZone" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="ko">
 <head>
 <script data-ad-client="ca-pub-5714659227321605" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<META http-equiv="refresh" content="60; URL=localhost:8080">
+<!-- google adsense -->
+<!-- script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script-->
 
-<title>SteamStock 지수 TOP50</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="description" content="투자자들이 가장 관심 갖는 종목을 실시간으로 수집하여, 스팀스탁지수 통계로 제공합니다. 시장의 관심 흐름을 데이터를 보고 판단할 수 있습니다.">
+
+<!-- 대표url -->
+<link rel="canonical" href="https://steamstock.info/index.jsp">
+
+<!-- 오픈그래프, 소셜미디어 공유시 우선활용되는 정보 -->
+<meta property="og:type" content="website"> 
+<meta property="og:title" content="스팀스탁 SteamStock | 주식 종목토론실 관심도 측정 서비스">
+<meta property="og:description" content="투자자들이 가장 관심 갖는 종목을 실시간으로 수집하여, 스팀스탁지수 통계로 제공합니다. 시장의 관심 흐름을 데이터를 보고 판단할 수 있습니다.">
+<meta property="og:image" content="https://steamstock.info/images/steamstock_robot.gif">
+<meta property="og:url" content="https://steamstock.info">
+
+
+<title>스팀스탁 SteamStock | 주식 종목토론실 관심도 측정 서비스</title>
 
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="shortcut icon" href="images/favicon/favicon.ico">
-<link rel="apple-touch-icon-precomposed" href="images/icon/flat-design-touch.png">
+<!--link rel="apple-touch-icon-precomposed" href="images/icon/flat-design-touch.png"-->
 
-<!-- google adsense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVLHN7CXYV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QVLHN7CXYV');
+</script>
+
+
+<!-- kakao start -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>   
+ 
+<script type="text/javascript">
+function sendLinkCustom(){
+	 if(!Kakao.isInitialized()){
+	 	Kakao.init("f745a290dd0d450e8b084ea872a46b20");
+	 }
+	 Kakao.Link.sendCustom({
+		 templateId: 60658
+	 })
+};
+</script>
+<!-- kakao end -->
+
+
+<!-- google chart start -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+   google.charts.load('current', {'packages':['gauge']});
+   google.charts.setOnLoadCallback(drawChart);
+
+   function drawChart() {
+
+     var data = google.visualization.arrayToDataTable([
+       ['Label', 'Value'],
+       ['Stock RPM', 80],
+       ['ST RPM', 55],
+       ['ST Continue', 68]
+     ]);
+
+     var options = {
+       width: 280, height: 82,
+       redFrom: 90, redTo: 100,
+       yellowFrom:75, yellowTo: 90,
+       minorTicks: 5
+     };
+
+     var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+     chart.draw(data, options);
+
+     setInterval(function() {
+       data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+       chart.draw(data, options);
+     }, 13000);
+     setInterval(function() {
+       data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+       chart.draw(data, options);
+     }, 5000);
+     setInterval(function() {
+       data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+       chart.draw(data, options);
+     }, 26000);
+   }
+ </script>
+<!-- google chart end -->
+
 
 <script src="js/jquery.min.js"></script>
+
+
+<script>
+$(function (){
+    $("#menu_toggle_btn").click(function(){
+        $("#gnb").toggle();
+    });
+});    
+</script>
 
 <!-- d3.js -->
 <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -33,7 +125,7 @@
 <!--
 	function start()
 	{
-		setInterval("alert()",30000);
+		setInterval("alert()",60000);
 	}
 	
 	function alert()
@@ -42,6 +134,7 @@
 	}
 //-->
 </script>
+
 <script language="javascript">
 <!--
 start();
@@ -72,7 +165,7 @@ border-bottom:1px solid #39d67c;
 }
 
 .info_list{
-display:flex;
+display:none;
 }
 
 .info_list li{
@@ -160,10 +253,8 @@ cursor:pointer;
 display:flex;
 justify-content:space-between;
 align-items:center;
-order:7;
-width:100%;
-height:300px;
-height:18.750rem;
+order:2;
+height:20.750rem;
 background:url(images/p_images/slider_01_yellow.jpg) center center no-repeat;
 }
 
@@ -189,15 +280,20 @@ margin-right:-0.625rem;
 background-position:-34px 0;
 }
 
+canvas#myChart{
+width:90%;
+height:90%;
+}
+
 /* 최근 글 영역, 인기 글 영역 CSS */
 .latest_post_section{
-order:4;
+order:5;
 background:#ffc40f;
 text-shadow:0px 1px 1px #b98e0b;
 }
 
 .popular_post_section{
-order:5;
+order:6;
 background:#a660c2;
 text-shadow:0px 1px 1px #714185;
 }
@@ -234,7 +330,7 @@ margin-top:0;
 
 /* 갤러리 영역 CSS */
 .gallery_section{
-order:6;
+order:8;
 padding:50px 12.5%;
 padding:3.125rem 12.5%;
 /* 40px ÷ 320px */
@@ -266,7 +362,7 @@ font-weight:bold;
 
 /* 인기 검색어 영역 CSS */
 .rankup_section{
-order:3;
+order:4;
 padding:40px 12.5%;
 padding:2.500rem 12.5%;
 /* 40px ÷ 320px */
@@ -304,11 +400,15 @@ border-radius:5px;
 
 /* 배너 영역 CSS */
 .banner_section{
-order:8;
+order:3;
 }
 
 .banner_box_01{
 background:#e6567a;
+height:120px;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
 .banner_box_01 a{
@@ -349,6 +449,7 @@ justify-content:space-between;
 order:10;
 width:100%;
 background:#474747;
+line-height:17px;
 }
 
 .footer p{
@@ -426,6 +527,11 @@ height:auto;
 .slider_section span{
 position:relative;
 z-index:10;
+}
+
+canvas#myChart{
+width:420px;
+height:350px;
 }
 
 /* 최근 글 영역, 인기 글 영역 CSS */
@@ -603,7 +709,7 @@ width:87.5%;
 display:flex !important;
 flex-direction:row;
 position:static;
-width:100%;
+width:90%;
 text-shadow:0px 1px 1px #25ab5e;
 }
 
@@ -630,9 +736,15 @@ display:none;
 
 /* 슬라이더 영역 CSS */
 .slider_section{
+display:flex;
 order:2;
 width:50%;
 /* 480px ÷ 960px */
+}
+
+canvas#myChart{
+width:420px;
+height:350px;
 }
 
 /* 최근 글 영역, 인기 글 영역 CSS */
@@ -745,13 +857,16 @@ System.out.println("클라이언트 IP 주소: "+ipAddress);
 
 %>
 <body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v11.0" nonce="vhJu5ZYd"></script>
+
 	<div id="wrap">
 		<section class="info_section">
 			<ul class="info_list">
-				<!-- li><a href="index.jsp"><img src="images/s_images/info_icon_01.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/info_icon_02.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/info_icon_03.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/info_icon_04.png" alt=""></a></li-->
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_01.png" alt=""></a></li>
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_02.png" alt=""></a></li>
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_03.png" alt=""></a></li>
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_04.png" alt=""></a></li>
 				
 				
 <%
@@ -789,30 +904,29 @@ while(rs.next()){
 }
 %>				
 				
-				<li>Kospi : <%=stock_price_now[0]%></li>
-				<li><%=stock_price_rate_now[0]%></li>
-				<li>Kosdaq : <%=stock_price_now[1]%></li>
-				<li><%=stock_price_rate_now[1]%></li>
 			
 			</ul>
 		</section>
 		<header class="header">
 			<h1 class="logo">
-				<a href="index.jsp">STEAM<br>STOCK</a>
+				<a href="index.jsp">STEAM<br>STOCK<!--br><br><font size='3'>장이멈춘순간에도<br>종토는달린다</font--></a>				
 			</h1>
 			<nav class="nav">
-				<ul class="gnb">
+				<ul class="gnb" id="gnb" style="display:none;">
 					<li><a href="index.jsp">홈</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
-					<li><a href="introudce.html">스팀스탁이란?</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
+					<li><a href="introudce.html">스팀스탁</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 					<li><a href="idx_top50.jsp">kospi통계</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 					<li><a href="idx_kosdaq_top50.jsp">kosdaq통계</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
+					<li><a href="https://finance.naver.com/sise/sise_index.nhn?code=KOSPI">Kospi : <%=stock_price_rate_now[0]%></a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
+					<li><a href="https://finance.naver.com/sise/sise_index.nhn?code=KOSDAQ">Kosdaq : <%=stock_price_rate_now[1]%></a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 				</ul>
 			</nav>
-			<span class="menu_toggle_btn">전체 메뉴 토글 버튼</span>
+			<span class="menu_toggle_btn" id="menu_toggle_btn">전체 메뉴 토글 버튼</span>
 		</header>
 		<section class="slider_section">
-			<span class="prev_btn">이전 버튼</span>
-
+			<span class="prev_btn">이전 버튼</span>	
+			
+				
 <%
 
  
@@ -828,7 +942,7 @@ while(rs.next()){
 String level[]=new String[5];
 String ST_idx[]=new String[5];
 int level_i=0;
-while(rs.next()){
+while(rs.next()){		
 	level[level_i]=rs.getString("STOCK_NAME");
 	ST_idx[level_i]=rs.getString("ST_IDX");
 	level_i=level_i+1;
@@ -836,8 +950,9 @@ while(rs.next()){
 %>			
 			
 <div>
-<!-- 그래프 -->
-        <canvas id="myChart" width="400" height="300"></canvas>
+
+<!-- 그래프 canvas 의 width, height 값은 모바일기준으로 250px고정하고 pc는 css에서 넓힘-->
+        <canvas id="myChart" width="250px" height="250px"></canvas>
         <script>
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -900,7 +1015,7 @@ while(rs.next()){
             frame_duration
         );
         </script>        
-</div>							
+</div>						
 			<span class="next_btn">다음 버튼</span>
 		</section>
 		<section class="latest_post_section">
@@ -973,35 +1088,54 @@ while(rs.next()){
 Class.forName("com.mysql.jdbc.Driver");
 conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 stmt = conn.createStatement();
-query = "SELECT (SELECT STOCK_NAME FROM STEAMSTOCK.STOCK_IDX WHERE STOCK_CODE = HIS.STOCK_CODE) AS STOCK_NAME, STOCK_CODE, SUM(5MIN_IDX*5MIN_READ_CNT) AS SUM_CNT FROM STOCK_IDX_5MIN_HISTORY HIS WHERE DATE='"+search_date_day+"' GROUP BY STOCK_CODE ORDER BY SUM_CNT DESC LIMIT 1;";
+//query = "SELECT (SELECT STOCK_NAME FROM STEAMSTOCK.STOCK_IDX WHERE STOCK_CODE = HIS.STOCK_CODE) AS STOCK_NAME, STOCK_CODE, format(ROUND(SUM(5MIN_IDX*5MIN_READ_CNT)/COUNT(STOCK_CODE),1),1) AS AVG_VALUE, SUM(5MIN_IDX*5MIN_READ_CNT) AS SUM_CNT, (SELECT SUBSTRING(STOCK_PRICE_RATE_TODAY,INSTR(STOCK_PRICE_RATE_TODAY,'원')+2,length(STOCK_PRICE_RATE_TODAY)) AS RATE FROM STEAMSTOCK.STOCK_IDX WHERE STOCK_CODE = HIS.STOCK_CODE) AS RATE FROM STOCK_IDX_5MIN_HISTORY HIS WHERE DATE='"+search_date_day+"' GROUP BY STOCK_CODE ORDER BY SUM_CNT DESC LIMIT 1;";
+query = "SELECT STOCK_NAME, STOCK_CODE,(SELECT MARKET_DIV FROM STOCK_ITEMS WHERE SHORT_CODE=ALLT.STOCK_CODE) AS MARKET_DIV, AVG_VALUE, SUM_CNT, RATE from (SELECT (SELECT STOCK_NAME FROM STEAMSTOCK.STOCK_IDX WHERE STOCK_CODE = HIS.STOCK_CODE) AS STOCK_NAME, STOCK_CODE, format(ROUND(SUM(5MIN_IDX*5MIN_READ_CNT)/COUNT(STOCK_CODE),1),1) AS AVG_VALUE, SUM(5MIN_IDX*5MIN_READ_CNT) AS SUM_CNT, (SELECT SUBSTRING(STOCK_PRICE_RATE_TODAY,INSTR(STOCK_PRICE_RATE_TODAY,'원')+2, length(STOCK_PRICE_RATE_TODAY)) AS RATE FROM STEAMSTOCK.STOCK_IDX WHERE STOCK_CODE = HIS.STOCK_CODE) AS RATE  FROM STOCK_IDX_5MIN_HISTORY HIS  WHERE DATE='"+search_date_day+"' GROUP BY STOCK_CODE  union all SELECT (SELECT STOCK_NAME FROM STEAMSTOCK.KOSDAQ_IDX WHERE STOCK_CODE = KOSDAQ_HIS.STOCK_CODE) AS STOCK_NAME, STOCK_CODE, format(ROUND(SUM(5MIN_IDX*5MIN_READ_CNT)/COUNT(STOCK_CODE),1),1) AS AVG_VALUE, SUM(5MIN_IDX*5MIN_READ_CNT) AS SUM_CNT, (SELECT SUBSTRING(STOCK_PRICE_RATE_TODAY,INSTR(STOCK_PRICE_RATE_TODAY,'원')+2, length(STOCK_PRICE_RATE_TODAY)) AS RATE FROM STEAMSTOCK.KOSDAQ_IDX WHERE STOCK_CODE = KOSDAQ_HIS.STOCK_CODE) AS RATE  FROM KOSDAQ_IDX_5MIN_HISTORY KOSDAQ_HIS  WHERE DATE='"+search_date_day+"' GROUP BY STOCK_CODE  ) ALLT ORDER BY ALLT.SUM_CNT DESC LIMIT 1;";
+
 rs = stmt.executeQuery(query);
 String stock_name_best="";
 String stock_code_best="";
+String rate="";
+String avg_st_value="";
+String market_div_value="";
+String market_target="";
+
 
 while(rs.next()){	
 	stock_name_best=rs.getString("STOCK_NAME");
 	stock_code_best=rs.getString("STOCK_CODE");
+	rate=rs.getString("RATE");
+	avg_st_value=rs.getString("AVG_VALUE");
+	market_div_value=rs.getString("MARKET_DIV");
 }
+
+
+if("KOSPI".equals(market_div_value)){
+	market_target="idx_5min_history_chart";
+}else{
+	market_target="idx_kosdaq_5min_history_chart";
+}
+	
 %>		
 		<section class="gallery_section">
 			<ul class="gallery_list">
 				<li>
-					<a href="/idx_5min_history.jsp?stock_code=<%=stock_code_best%>&stock_name=<%=stock_name_best%>">
+					<a href="/<%=market_target%>.jsp?stock_code=<%=stock_code_best%>&stock_name=<%=stock_name_best%>">
 						<figure>
 							<img src="images/p_images/gallery_01.jpg" alt="<%=stock_name_best%>">
-							<figcaption>최고 스팀스탁지수는<P><br>'<%=stock_name_best%>'</figcaption>
+							<figcaption>오늘 5분평균 최고는 <P><br><%=stock_name_best%><br><br>  <%=avg_st_value%>(<%=rate%>)</figcaption>
 						</figure>
 					</a>
 				</li>
 				<br>
 				<li>
-					<a href="#">
+					<a href="/what_st_idx.html">
 						<figure>
 						<img src="images/p_images/gallery_02.jpg" alt="">
 						<figcaption>스팀스탁지수 안내</figcaption>
 						</figure>
 					</a>
 				</li>
+				<br>
 			</ul>				
 		</section>
 		<section class="rankup_section">
@@ -1016,7 +1150,7 @@ while(rs.next()){
  //////////////////////////////////////
  //query = "SELECT STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT FROM STEAMSTOCK.STOCK_IDX ORDER BY cast(5MIN_READ_CNT as unsigned) desc, cast(idx_now as unsigned) desc limit 10";
  //query = "SELECT 'KOSPI' AS MARKET, STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT FROM STEAMSTOCK.STOCK_IDX union all SELECT 'KOSDAQ' AS MARKET, STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT FROM STEAMSTOCK.KOSDAQ_IDX ORDER BY cast(5MIN_READ_CNT as unsigned) desc, cast(idx_now as unsigned) desc limit 10";
- query = "SELECT 'KOSPI' AS MARKET, STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT, cast(5MIN_READ_CNT as unsigned)*cast(idx_now as unsigned) as ST_IDX FROM STEAMSTOCK.STOCK_IDX union all SELECT 'KOSDAQ' AS MARKET, STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT, cast(5MIN_READ_CNT as unsigned)*cast(idx_now as unsigned) as ST_IDX FROM STEAMSTOCK.KOSDAQ_IDX ORDER BY cast(5MIN_READ_CNT as unsigned)*cast(idx_now as unsigned) desc limit 10";
+ query = "SELECT 'KOSPI' AS MARKET, STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT, cast(5MIN_READ_CNT as unsigned)*cast(idx_now as unsigned) as ST_IDX, SUBSTRING(STOCK_PRICE_RATE_TODAY,INSTR(STOCK_PRICE_RATE_TODAY,'원')+2,length(STOCK_PRICE_RATE_TODAY)) AS RATE FROM STEAMSTOCK.STOCK_IDX union all SELECT 'KOSDAQ' AS MARKET, STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT, cast(5MIN_READ_CNT as unsigned)*cast(idx_now as unsigned) as ST_IDX, SUBSTRING(STOCK_PRICE_RATE_TODAY,INSTR(STOCK_PRICE_RATE_TODAY,'원')+2,length(STOCK_PRICE_RATE_TODAY)) AS RATE FROM STEAMSTOCK.KOSDAQ_IDX ORDER BY cast(5MIN_READ_CNT as unsigned)*cast(idx_now as unsigned) desc limit 10";
  rs = stmt.executeQuery(query); 
  //////////////////////////////////////
  
@@ -1025,11 +1159,11 @@ while(rs.next()){
 while(rs.next()){	
 	if("KOSPI".equals(rs.getString("MARKET"))){
 %>			
-				<li><a href="/idx_5min_history.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>"><%= rs.getString("STOCK_NAME")%></a></li>
+				<li><a href="/idx_5min_history_chart.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>"><%= rs.getString("STOCK_NAME")%> <%= rs.getString("RATE")%></a></li>
 <%	
 	}else{
 %>		
-				<li><a href="/idx_kosdaq_5min_history.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>"><%= rs.getString("STOCK_NAME")%></a></li>
+				<li><a href="/idx_kosdaq_5min_history_chart.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>"><%= rs.getString("STOCK_NAME")%> <%= rs.getString("RATE")%></a></li>
 <%
 	}
 }
@@ -1046,31 +1180,43 @@ while(rs.next()){
 			</ul>
 		</section>
 		<section class="banner_section">
-			<div class="banner_box_01">
-				<a href=""><img src="images/s_images/w3c_logo.png" alt=""></a>
-			</div>
+				
+
+			<div class="banner_box_01" align="center">
+				<div id="chart_div" style="width: 280px; height: 82px; vertical-align:center;"></div>	
+			</div>				
+							
+				
+				
+				
+				
 			<div class="banner_box_02">
 				<ul class="banner_list">
-					<li><a href=""><img src="images/s_images/js_logo.png" alt=""></a></li>
-					<li><a href=""><img src="images/s_images/html_logo.png" alt=""></a></li>
-					<li><a href=""><img src="images/s_images/css_logo.png" alt=""></a></li>
+					<li><img src="images/s_images/js_logo.png" alt=""></li>
+					<li><img src="images/s_images/html_logo.png" alt=""></li>
+					<li><img src="images/s_images/css_logo.png" alt=""></li>
 				</ul>
 			</div>
 		</section>
 		<section class="social_section">
 			<ul class="social_list">
-				<li><a href=""><img src="images/s_images/social_icon_01.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/social_icon_02.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/social_icon_03.png" alt=""></a></li>
+				<!--li><a href="https://twitter.com" target="_blank"><img src="images/s_images/social_icon_01.png" alt=""></a></li-->
+<!-- 트위터코드 참고 https://codepen.io/trichter90/pen/jvGXXz -->				
+<a alt="Steamstock generates statistics every five minutes by making the number of views multiplied  by the number of posts registered in the portal stock item discussion room.  Based on this, it is a system that provides a ranking of interest." target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsteamstock.info&text=%EC%A3%BC%EC%8B%9D%20%EC%A2%85%EB%AA%A9%ED%86%A0%EB%A1%A0%EC%8B%A4%EC%9D%98%20%EA%B4%80%EC%8B%AC%EC%A0%95%EB%8F%84(%EB%93%B1%EB%A1%9D%EA%B1%B4%EA%B3%BC%EC%A1%B0%ED%9A%8C%EC%88%98)%EB%A5%BC%20%ED%86%B5%EA%B3%84%EC%99%80%20%EC%A7%80%EC%88%98%EB%A1%9C%20%EB%B3%BC%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.&hashtags=STEAMSTOCK,KOSPI,KOSDAQ"><img src="images/s_images/social_icon_01.png" alt=""></a>				
+				
+				<!--li><a href="https://www.facebook.com" target="_blank"><img src="images/s_images/social_icon_02.png" alt=""></a></li-->
+<!-- facebook코드 참고 https://developers.facebook.com/docs/plugins/share-button?locale=ko_KR -->				
+<li><div class="fb-share-button" data-href="https://steamstock.info" data-layout="icon_link" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsteamstock.info%2F&amp;src=sdkpreparse"><img src="images/s_images/social_icon_02.png" alt=""></a></div></li>				
+				
+				<li><a href="javascript:sendLinkCustom();"><img src="images/s_images/kakao_icon.png" width="53px" height="53px"  alt=""></a></li>
 			</ul>
 		</section>
 		<footer class="footer">
-			<p>copyright&copy; 2021 LUCASOFT all rights reserved. <br><br>EMAIL: service@lucasoft.co.kr
+			<p>copyright&copy; 2021 <a href="http://lucasoft.co.kr">LUCASOFT</a> all rights reserved.  <br><br>장이멈춘순간에도종토는달린다 - SteamStock
 			</p>
 				
 		</footer>
 	</div>
-
 
 
 

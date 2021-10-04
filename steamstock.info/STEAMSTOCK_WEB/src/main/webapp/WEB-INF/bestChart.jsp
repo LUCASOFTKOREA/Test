@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="shortcut icon" href="images/favicon/favicon.ico">
-<link rel="apple-touch-icon-precomposed" href="images/icon/flat-design-touch.png">
+<!--link rel="apple-touch-icon-precomposed" href="images/icon/flat-design-touch.png"-->
 
 <!-- google adsense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script>
