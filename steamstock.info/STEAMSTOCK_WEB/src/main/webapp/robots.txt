@@ -1,0 +1,5 @@
+User-Agent : Googlebot
+User-Agent : Yeti
+User-Agent : Daumoa
+Allow : /
+Sitemap: https://steamstock.info/sitemap.xml

@@ -1,26 +1,41 @@
+<%@page import="com.sun.tools.javac.util.StringUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.sql.*"%>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.TimeZone" %>
-    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<META http-equiv="refresh" content="60; URL=localhost:8080">
-
-
-<title>SteamStock 지수 TOP50</title>
-
-<link rel="stylesheet" type="text/css" href="css/reset.css">
-<link rel="shortcut icon" href="images/favicon/favicon.ico">
-<link rel="apple-touch-icon-precomposed" href="images/icon/flat-design-touch.png">
-<script src="js/jquery.min.js"></script>
+<script data-ad-client="ca-pub-5714659227321605" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 <!-- google adsense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script>
+<!-- script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5714659227321605" crossorigin="anonymous"></script-->
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+
+<title>Kospi 종목별 SteamStock 지수 챠트</title>
+<link rel="stylesheet" type="text/css" href="css/reset.css">
+<link rel="shortcut icon" href="images/favicon/favicon.ico">
+<!--link rel="apple-touch-icon-precomposed" href="images/icon/flat-design-touch.png"-->
+<script src="js/jquery.min.js"></script>
+
+
+<!-- chart.js linechart -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+
      
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVLHN7CXYV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QVLHN7CXYV');
+</script>
      
 <script language="JavaScript">
 <!--
@@ -40,6 +55,17 @@
 start();
 -->
 </script>
+
+<script src="js/jquery.min.js"></script>
+
+<script>
+$(function (){
+    $("#menu_toggle_btn").click(function(){
+        $("#gnb").toggle();
+    });
+});    
+</script>
+
 
 <style>
 /* 모바일용 CSS */
@@ -65,7 +91,7 @@ border-bottom:1px solid #39d67c;
 }
 
 .info_list{
-display:flex;
+display:none;
 }
 
 .info_list li{
@@ -193,6 +219,16 @@ span.next_btn{
 margin-right:-10px;
 margin-right:-0.625rem;
 background-position:-34px 0;
+}
+
+#tb_chart{
+width:250px;
+height:250px;
+}
+
+canvas#myChart{
+width:100%;
+height:100%;
 }
 
 /* 최근 글 영역, 인기 글 영역 CSS */
@@ -355,6 +391,7 @@ justify-content:space-between;
 order:10;
 width:100%;
 background:#474747;
+line-height:17px;
 }
 
 .footer p{
@@ -368,6 +405,7 @@ font-weight:bold;
 color:#fff;
 text-shadow:0px 1px 1px #191919;
 }
+
 
 /* 태블릿용 CSS */
 @media all and (min-width:768px){
@@ -432,6 +470,16 @@ height:auto;
 .slider_section span{
 position:relative;
 z-index:10;
+}
+
+#tb_chart{
+width:500px;
+height:500px;
+}
+
+canvas#myChart{
+width:100%;
+height:100%;
 }
 
 /* 최근 글 영역, 인기 글 영역 CSS */
@@ -552,6 +600,7 @@ margin:1.500rem 0;
 padding:40px 0;
 padding:2.500rem 0;
 }
+
 }
 
 /* PC용 CSS */
@@ -639,6 +688,16 @@ display:none;
 order:2;
 width:100%;
 /* 480px ÷ 960px */
+}
+
+#tb_chart{
+width:850px;
+height:600px;
+}
+
+canvas#myChart{
+width:850px;
+height:600px;
 }
 
 /* 최근 글 영역, 인기 글 영역 CSS */
@@ -739,60 +798,57 @@ padding-left:3.125%;
 /* 30px ÷ 960px */
 text-align:left;
 }
+
 }
 </style>
 
 
-<script language="JavaScript">
-<!--
-	function start()
-	{
-		setInterval("alert()",30000);
-	}
-	
-	function alert()
-	{
-		location.reload();
-	}
-//-->
-</script>
-<script language="javascript">
-<!--
-start();
--->
-</script>
+<style>
+
+table,tr,td{
+
+  border:0px solid #000000;
+
+  border-collapse:collapse;
+
+}
+
+tr.colored:nth-child(even){
+
+  background-color:#f3f4a2;
+
+
+}
+
+tr.colored:nth-child(odd){
+
+  background-color:#f3f4a2;
+
+
+}
+
+tr.colored:hover td{
+
+  background-color:white !important;
+
+  color:#303f39 !important;
+
+}
+
+</style>
 
 </head>
-
-<%
-System.out.println("page idx_top50.jsp start!!!");
-
-Date nowTime = new Date();
-//SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-SimpleDateFormat sf = new SimpleDateFormat("MM월 dd일 HH시 mm분");
-
-TimeZone tz;
-tz=TimeZone.getTimeZone("Asia/Seoul");
-sf.setTimeZone(tz);
-
-String search_date = sf.format(nowTime);
-
-%>
-
-<%
-System.out.println("page index.jsp start!!!");
-String ipAddress=request.getRemoteAddr();
-System.out.println("클라이언트 IP 주소: "+ipAddress);
-
-%>
 <body>
+
+
+
 	<div id="wrap">
 		<section class="info_section">
 			<ul class="info_list">
 				<li><a href="index.jsp"><img src="images/s_images/info_icon_01.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/info_icon_02.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/info_icon_03.png" alt=""></a></li>
-				<li><a href=""><img src="images/s_images/info_icon_04.png" alt=""></a></li>
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_02.png" alt=""></a></li>
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_03.png" alt=""></a></li>
+				<li><a href="index.jsp"><img src="images/s_images/info_icon_04.png" alt=""></a></li>
 			</ul>
 		</section>
 		<header class="header">
@@ -800,22 +856,33 @@ System.out.println("클라이언트 IP 주소: "+ipAddress);
 				<a href="index.jsp">STEAM<br>STOCK</a>
 			</h1>
 			<nav class="nav">
-				<ul class="gnb">
+				<ul class="gnb" id="gnb" style="display:none;">
 					<li><a href="index.jsp">홈</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 					<li><a href="introudce.html">스팀스탁이란?</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 					<li><a href="idx_top50.jsp">kospi통계</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 					<li><a href="idx_kosdaq_top50.jsp">kosdaq통계</a><span class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 				</ul>
 			</nav>
-			<span class="menu_toggle_btn">전체 메뉴 토글 버튼</span>
+			<span class="menu_toggle_btn" id="menu_toggle_btn">전체 메뉴 토글 버튼</span>
 		</header>
+
+	
+
+		
 		<section class="slider_section">
 			<span class="prev_btn">이전 버튼</span>
-			
-			
-			
 
+
+			
 <%
+System.out.println("page idx_5min_history_chart.jsp start!!!");
+
+Date nowTime_Title = new Date();
+SimpleDateFormat sf_Title = new SimpleDateFormat("MM월 dd일 HH시 mm분");
+String search_date_Title = sf_Title.format(nowTime_Title);
+
+
+
 String DB_URL = "jdbc:mysql://aa1xqh64wopfngq.cbsaeq7bocl1.ap-northeast-2.rds.amazonaws.com:3306/STEAMSTOCK";
 String DB_USER = "lucasoftDB";
 String DB_PASSWORD= "jazz6547";
@@ -830,81 +897,214 @@ try {
  stmt = conn.createStatement();
  
  //////////////////////////////////////
- String query = "SELECT STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.STOCK_IDX ORDER BY cast(5MIN_READ_CNT as unsigned) desc, cast(idx_now as unsigned) desc limit 50";
+ String range = request.getParameter("range");
+ 
+ if("null".equals(range) || range==null){
+	 range="lately";
+ }
+ 
+ String stock_name = request.getParameter("stock_name");
+ String stock_code = request.getParameter("stock_code");
+ 
+ TimeZone tz;
+ Date nowTime = new Date();
+ SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+ 
+ tz=TimeZone.getTimeZone("Asia/Seoul");
+ sf.setTimeZone(tz);
+ 
+ String search_date = sf.format(nowTime);
+  
+ //String query = "SELECT STOCK_NAME,STOCK_CODE,IDX_NOW,5MIN_READ_CNT FROM STEAMSTOCK.STOCK_IDX ORDER BY cast(5MIN_READ_CNT as unsigned) desc, cast(idx_now as unsigned) desc limit 50";
+ //원본 String query = "SELECT STOCK_CODE, HOUR, 5MIN, 5MIN_IDX, format(5MIN_READ_CNT,0) AS 5MIN_READ_CNT, 5MIN_IDX*5MIN_READ_CNT AS ST_IDX, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.STOCK_IDX_5MIN_HISTORY WHERE STOCK_CODE = '"+stock_code+"' AND DATE = '"+search_date+"' ORDER BY UPDATE_DATETIME DESC limit 20";
+ 
+ String query = "";
+  
+ if("day".equals(range)){
+	 query = "SELECT STOCK_CODE, HOUR, 5MIN, 5MIN_IDX, format(5MIN_READ_CNT,0) AS 5MIN_READ_CNT, 5MIN_IDX*5MIN_READ_CNT AS ST_IDX, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.STOCK_IDX_5MIN_HISTORY WHERE STOCK_CODE = '"+stock_code+"' AND DATE = '"+search_date+"' ORDER BY UPDATE_DATETIME DESC";	 
+ }else if("open".equals(range)){	 
+	 query = "SELECT STOCK_CODE, HOUR, 5MIN, 5MIN_IDX, format(5MIN_READ_CNT,0) AS 5MIN_READ_CNT, 5MIN_IDX*5MIN_READ_CNT AS ST_IDX, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.STOCK_IDX_5MIN_HISTORY WHERE STOCK_CODE = '"+stock_code+"' AND DATE = '"+search_date+"' AND HOUR>='08' AND HOUR<='16' ORDER BY UPDATE_DATETIME DESC";			 
+ }else{
+	 query = "SELECT STOCK_CODE, HOUR, 5MIN, 5MIN_IDX, format(5MIN_READ_CNT,0) AS 5MIN_READ_CNT, 5MIN_IDX*5MIN_READ_CNT AS ST_IDX, STOCK_PRICE_TODAY, STOCK_PRICE_RATE_TODAY FROM STEAMSTOCK.STOCK_IDX_5MIN_HISTORY WHERE STOCK_CODE = '"+stock_code+"' AND DATE = '"+search_date+"' ORDER BY UPDATE_DATETIME DESC limit 24";
+ }
+ 
  rs = stmt.executeQuery(query); 
  //////////////////////////////////////
  
 %>
 
-<table>
+
+
+<table id="tb_chart" border="1" cellspacing="0">
 <tr>
-<td colspan="9">
+<td>
 &nbsp;
 </td>
 </tr>
 <tr>
-<td colspan="9">
+<td>
 &nbsp;
 </td>
 </tr>
 <tr>
-<td colspan="9" align="center">
-<STRONG>Kospi 스팀스탁지수 TOP50(5분간격 실시간 데이터) <%=search_date%></STRONG>
+<td align="center">
+ 
+<p>
+<STRONG><%=request.getParameter("stock_name")%> 5분 히스토리 챠트</p><br><p>(<%=search_date_Title%>)</STRONG>&nbsp;</p><br>
+<STRONG><a href="https://finance.naver.com/item/board.nhn?code=<%=stock_code%>">[Naver종토방&nbsp;|&nbsp;</a> 
+<a href="https://finance.daum.net/quotes/A<%=stock_code%>#talks">Daum종토방&nbsp;|&nbsp;</a>
+<a href="/idx_5min_history.jsp?stock_code=<%=stock_code%>&stock_name=<%=stock_name%>">표]</a><br><br><p>
+<a href="/idx_5min_history_chart.jsp?stock_code=<%=stock_code%>&stock_name=<%=stock_name%>&range=day">일간&nbsp;|&nbsp;</a>
+<a href="/idx_5min_history_chart.jsp?stock_code=<%=stock_code%>&stock_name=<%=stock_name%>&range=open">장중&nbsp;|&nbsp;</a>
+<a href="/idx_5min_history_chart.jsp?stock_code=<%=stock_code%>&stock_name=<%=stock_name%>">최근</a></p>
+</STRONG> 
+
 </td>
 </tr>
-<td colspan="9">
-&nbsp;
-</td>
+
 <tr>
-<td colspan="9">
-&nbsp;
-</td>
-</tr>
-<tr>
-<td>종목명</td>
-<!-- td>등록건수</td-->
-<!-- td>조회수</td-->
-<td align="center">스팀스탁지수</td>
-<td align="center">주가</td>
-<td align="center">주가변화</td>
-<td align="center">&nbsp;스팀스탁지수변화&nbsp;</td>
-<td align="center">&nbsp;종목게시판(최신글)&nbsp;</td>
-<td align="center">&nbsp;종목게시판(인기글)&nbsp;</td>
-</tr>
-<tr>
-<td colspan="9">
+<td>
 &nbsp;
 </td>
 </tr>
-<%
-while(rs.next()){	
-%>
 <tr>
-<td> 
-<%= rs.getString("STOCK_NAME")%> 
-[
-<a href="https://finance.naver.com/item/board.nhn?code=<%=rs.getString("STOCK_CODE")%>">N</a> 
-<a href="https://finance.daum.net/quotes/A<%=rs.getString("STOCK_CODE")%>#talks">D</a>
-]
+<td>
+&nbsp;
 </td>
-<!-- td> <%= rs.getString("IDX_NOW")%> </td-->
-<!-- td> <%= rs.getString("5MIN_READ_CNT")%> </td-->
-<td align="center"> <%= Integer.parseInt((rs.getString("5MIN_READ_CNT")))*Integer.parseInt((rs.getString("IDX_NOW")))%> </td>
-<td align="center"> <%= rs.getString("STOCK_PRICE_TODAY")%>원 </td>
-<td width="180px" align="center"> <%= (rs.getString("STOCK_PRICE_RATE_TODAY")).replace("전일대비하락","-").replace("전일대비보합","").replace("전일대비상승","+").replace("+","<font color='red'>+</font>").replace("-","<font color='blue'>-</font>")%></td>
-<td align="center"> <a href="/idx_5min_history.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">5분보기</a> </td>
-<td align="center"> <a href="/board.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">최신글보기</a> </td>
-<td align="center"> <a href="/board_top.jsp?stock_code=<%= rs.getString("STOCK_CODE")%>&stock_name=<%=rs.getString("STOCK_NAME")%>">인기글보기</a> </td>
 </tr>
-<%	
-}
-%>
+
 <tr>
-<td colspan="9">
+<td>
+	<!--차트가 그려질 부분-->
+	<canvas id="myChart" width="250" height="250"></canvas>
+</td>
+</tr>
+<tr>
+<td>
 &nbsp;
 </td>
 </tr>
 </table>
+
+
+
+
+
+
+
+<%
+int i=0;
+
+String time[]= new String[288];
+String st_val[]= new String[288];
+
+
+while(rs.next()){	
+	
+	time[i]=rs.getString("HOUR")+":"+rs.getString("5MIN");
+	st_val[i]=rs.getString("ST_IDX");
+	i=i+1;	
+
+}
+%>
+
+
+			<span class="next_btn">다음 버튼</span>
+		</section>
+
+	
+		
+
+		<footer class="footer">
+			<p>copyright&copy; 2021 <a href="http://lucasoft.co.kr">LUCASOFT</a> all rights reserved.  <br><br>장이멈춘순간에도종토는달린다 - SteamStock
+			</p>
+		</footer>
+
+				
+	</div>
+
+
+
+
+
+<script type="text/javascript">
+            var context = document
+                .getElementById('myChart')
+                .getContext('2d');
+            var myChart = new Chart(context, {
+                type: 'line', // 차트의 형태
+                data: { // 차트에 들어갈 데이터
+                    labels: [
+                        //x 축
+                        //'1','2','3','4','5','6','7'
+                        <%
+                        for(int j=0;j<i;j=j+1){
+                        	//System.out.print("'"+time[(i-j)-1]+"',");
+                        	out.print("'"+time[(i-j)-1]+"',");	
+                        }                        
+                    	//System.out.println("");
+                    	//System.out.println("============================================");
+                        %>
+                    ],
+                    datasets: [
+                        { //데이터
+                            label: '스팀스탁지수 5분챠트(<%=range%>)', //차트 제목
+                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            data: [
+                                //21,19,25,20,23,26,25 //x축 label에 대응되는 데이터 값
+                                <%
+                                for(int j=0;j<i;j=j+1){
+                                	//System.out.print("'"+st_val[(i-j)-1]+"',");	
+                                	out.print("'"+st_val[(i-j)-1]+"',");	
+                                }   
+                            	//System.out.println("");
+                            	//System.out.println("============================================");                      
+                                %>
+                            ],
+                            backgroundColor: [
+                                //색상
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                //경계선 색상
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1 //경계선 굵기
+                        }/* ,
+                        {
+                            label: 'test2',
+                            fill: false,
+                            data: [
+                                8, 34, 12, 24
+                            ],
+                            backgroundColor: 'rgb(157, 109, 12)',
+                            borderColor: 'rgb(157, 109, 12)'
+                        } */
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+        </script>
 
 <%
  rs.close();
@@ -913,25 +1113,6 @@ while(rs.next()){
 } catch(Exception e) {
  out.println(e.getMessage());
 }
-%>
-			
-			
-			
-			<span class="next_btn">다음 버튼</span>
-		</section>
-
-	
-		
-
-		<footer class="footer">
-			<p>copyright&copy; 2021 LUCASOFT all rights reserved. <br><br>EMAIL: service@lucasoft.co.kr</p>
-		</footer>
-	</div>
-
-
-
-
-
-
+%>        
 </body>
 </html>
